@@ -40,29 +40,25 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
-%size(X)
-%size(Theta)
+%Cost
 
 pred = X * Theta';
-%size(pred)
 
 error = pred .- Y;
 err_factor = error .* R;
-%size(pred)
 
-J = (sum(sum((err_factor).^2)))/2;
-size(J)
+reg1 = (sum(sum(Theta .^2))) * (lambda/2);
+reg2 = (sum(sum(X .^2))) * (lambda/2);
 
-%J_tent = (((X * Theta') - Y) .^ 2) ./ 2;
+J = ((sum(sum((err_factor).^2)))/2) + reg1 + reg2;
 
-% size(J_tent)
-% size(R)
+%Gradients
 
-%J = J_tent .* R;
+X_grad = (err_factor * Theta) .+ (lambda .* X);
+%size(X_grad)
 
-
-
-
+Theta_grad = (err_factor' * X) .+ (lambda .* Theta);
+%size(Theta_grad)
 
 
 
